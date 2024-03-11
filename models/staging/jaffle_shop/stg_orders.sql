@@ -6,7 +6,7 @@ with orders as (
         order_date,
         status
 
-    from ld_raw.jaffle_shop.orders
+    from {{ source('jaffle_shop', 'orders') }}
 
 )
 

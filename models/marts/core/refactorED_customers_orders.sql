@@ -12,6 +12,10 @@ customers as (
     select * from {{ source('jaffle_shop', 'customers') }}
 ),
 
+payment as (
+    select * from {{ ref('stg_payments_refactoring') }}
+),
+
 -- logical CTEs
 -- final CTE
 -- simple select statement
@@ -28,15 +32,7 @@ paid_orders as (
         customers.last_name as customer_last_name
     from orders
     left join
-        (
-            select
-                orderid as order_id,
-                max(created) as payment_finalized_date,
-                sum(amount) / 100.0 as total_amount_paid
-            from ld_raw.stripe.payment
-            where status <> 'fail'
-            group by 1
-        ) p
+        payment p
         on orders.id = p.order_id
     left join customers on orders.user_id = customers.id
 ),

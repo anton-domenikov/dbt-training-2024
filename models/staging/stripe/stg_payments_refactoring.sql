@@ -1,4 +1,4 @@
-with payment as (
+with payments as (
     select
         orderid as order_id,
         max(created) as payment_finalized_date,
@@ -8,4 +8,4 @@ with payment as (
     group by 1
 )
 
-select * from payment
+select * from payments

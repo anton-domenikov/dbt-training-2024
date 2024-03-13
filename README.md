@@ -1,5 +1,6 @@
 
-In this repo I will keep track of all DBT courses I have completed from their official website.
+In this repo I will keep track of all DBT courses I have completed from their official website.\
+Each branch is a different course althogether (except update-readme).
 
 
 - [dbt Cloud and Snowflake for Developers](https://courses.getdbt.com/courses/dbt-cloud-and-snowflake-for-developers) - Completed 100%

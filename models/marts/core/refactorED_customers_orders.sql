@@ -19,9 +19,8 @@ clv_aggregation as (
     order by paid_orders.order_id
 ),
 
--- final CTE
-final as (
 
+final as (
     select
         paid_orders.*,
 
@@ -40,5 +39,4 @@ final as (
     order by order_id
 )
 
--- simple select statement
 select * from final

@@ -32,13 +32,11 @@ final as (
         case
             when customer_orders.first_order_date = paid_orders.order_placed_at then 'new' else 'return'
         end as nvsr,
-        x.clv_bad as customer_lifetime_value,
+        clv_aggregation.clv_bad as customer_lifetime_value,
         customer_orders.first_order_date as fdos
     from paid_orders
     left join customer_orders using (customer_id)
-    left outer join
-        clv_aggregation x
-        on x.order_id = paid_orders.order_id
+    left outer join clv_aggregation using (order_id)
     order by order_id
 )
 

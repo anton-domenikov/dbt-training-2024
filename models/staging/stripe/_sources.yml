@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: stripe
+    database: ld_raw
+    tables:
+      - name: payment

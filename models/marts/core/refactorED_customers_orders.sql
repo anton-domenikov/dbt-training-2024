@@ -7,7 +7,7 @@ orders as (
 ),
 
 customers as (
-    select * from {{ source('jaffle_shop', 'customers') }}
+    select * from {{ ref('stg_customers_refactoring') }}
 ),
 
 payments as (
@@ -23,23 +23,23 @@ paid_orders as (
         orders.order_status,
         payments.total_amount_paid,
         payments.payment_finalized_date,
-        customers.first_name as customer_first_name,
-        customers.last_name as customer_last_name
+        customers.customer_first_name,
+        customers.customer_last_name
     from orders
     left join
         payments
         on orders.order_id = payments.order_id
-    left join customers on orders.customer_id = customers.id
+    left join customers on orders.customer_id = customers.customer_id
 ),
 
 customer_orders as (
     select
-        customers.id as customer_id,
-        min(order_placed_at) as first_order_date,
-        max(order_placed_at) as most_recent_order_date,
+        customers.customer_id as customer_id,
+        min(orders.order_placed_at) as first_order_date,
+        max(orders.order_placed_at) as most_recent_order_date,
         count(orders.order_id) as number_of_orders
     from customers
-    left join orders on orders.customer_id = customers.id
+    left join orders on orders.customer_id = customers.customer_id
     group by 1
 ),
 

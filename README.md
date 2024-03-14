@@ -1,12 +1,21 @@
+Final result of the practice session in [Refactoring SQL for Modularity](https://courses.getdbt.com/courses/refactoring-sql-for-modularity) , used dbt-audit-helper
 
-In this repo I will keep track of all DBT courses I have completed from their official website.
+Query ran:
+```
+{% set old_etl_relation=ref('refactoring_customer_orders') %}
 
+{% set dbt_relation=ref('refactorED_customers_orders') %}
 
-- [dbt Cloud and Snowflake for Developers](https://courses.getdbt.com/courses/dbt-cloud-and-snowflake-for-developers) - Completed 100%
-- [dbt Cloud and Snowflake for Admins](https://courses.getdbt.com/courses/dbt-cloud-and-snowflake-for-admins) - Completed 100%
-- [dbt Fundamentals](https://courses.getdbt.com/courses/fundamentals) - Completed 100% - checkout [this branch](https://github.com/anton-domenikov/dbt-training-2024/tree/dbt-fundamentals-final) for the latest version of code from that course
-- [Refactoring SQL for Modularity](https://courses.getdbt.com/courses/refactoring-sql-for-modularity) - currently working on this around 30% complete
-- [Advanced Testing](https://courses.getdbt.com/courses/advanced-testing) - not started yet
-- [Advanced Materializations](https://courses.getdbt.com/courses/advanced-materializations) - not started yet
-- [Jinja, Macros, Packages](https://courses.getdbt.com/courses/jinja-macros-packages) - not started yet
-- [Advanced Deployment with dbt Cloud](https://courses.getdbt.com/courses/advanced-deployment) - not started yet
+{{ audit_helper.compare_relations(
+    a_relation=old_etl_relation,
+    b_relation=dbt_relation,
+    exclude_columns=["loaded_at"],
+    primary_key="order_id"
+) }}
+```
+
+Result:
+```
+IN_A,IN_B,COUNT,PERCENT_OF_TOTAL
+true,true,99,100.0
+```

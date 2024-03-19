@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: one unique customer per row
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+  - name: fct_orders
+    description: one unique order per row
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null

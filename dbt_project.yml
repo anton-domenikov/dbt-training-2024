@@ -42,4 +42,5 @@ models:
     staging:
       +materialized: view
     marts:
+      +required_tests: {"relationship.*": 1}
       +materialized: table

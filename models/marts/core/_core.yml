@@ -8,10 +8,35 @@ models:
         tests:
           - unique
           - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
   - name: fct_orders
     description: one unique order per row
+
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "amount > 5"
+
     columns:
       - name: order_id
         tests:
           - unique
           - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: amount
+        description: Dollars spent per order
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              row_condition: "order_id is not null"
+              strictly: false 
+
+  - name: orders_by_customer_9
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique

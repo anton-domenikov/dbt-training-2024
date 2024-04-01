@@ -11,3 +11,5 @@ with orders as (
 )
 
 select * from orders
+
+{{ limit_data_by_timestamp_in_dev('order_date', 10000)}}
